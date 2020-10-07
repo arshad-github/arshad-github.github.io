@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>three.js webgl - simple text from json</title>
+		<title>Arshad</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 		<link type="text/css" rel="stylesheet" href="main.css">
@@ -34,14 +34,16 @@
 				camera.position.set( 0, -400, 600 );
 
 				scene = new THREE.Scene();
-				scene.background = new THREE.Color( 0xf0f0f0 );
+				// scene.background = new THREE.Color( 0xf0f0f0 );
+				scene.background = new THREE.Color( 0x000000 );
 
 				var loader = new THREE.FontLoader();
 				loader.load( './helvetiker.json', function ( font ) {
 
 					var xMid, text;
 
-					var color = 0x006699;
+					// var color = 0x006699;
+					var color = 0x40BB4E;
 
 					var matDark = new THREE.LineBasicMaterial( {
 						color: color,
@@ -55,15 +57,16 @@
 						side: THREE.DoubleSide
 					} );
 
-					var message = " I'm a developer. \n\nDrag this text around \n\n Or contact me: \narshad.e_mail@yahoo.com";
+					var message = "Hi, I'm Arshad. \nI'm a developer. \nDrag this text around, \nor contact me: \narshad.e_mail@yahoo.com";
 
-					var shapes = font.generateShapes( message, 100 );
+					var shapes = font.generateShapes( message, 80 );
 
 					var geometry = new THREE.ShapeBufferGeometry( shapes );
 
 					geometry.computeBoundingBox();
 
 					xMid = - 0.5 * ( geometry.boundingBox.max.x - geometry.boundingBox.min.x );
+					// xMid = - 0.5 * ( geometry.boundingBox.max.x - geometry.boundingBox.min.x );
 
 					geometry.translate( xMid, 0, 0 );
 
