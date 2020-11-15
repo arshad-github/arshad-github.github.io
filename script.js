@@ -34,7 +34,7 @@ function init() {
       side: THREE.DoubleSide,
     });
     var message =
-      "Hi, I'm Arshad. \nI'm a developer. \nDrag this text around, \nor contact me: \narshad.e_mail@yahoo.com";
+      "Hi, I'm Arshad. \nI'm a developer. \nDrag this text around, \nor contact me: \narshad.sbsa@gmail.com";
     var shapes = font.generateShapes(message, 80);
     var geometry = new THREE.ShapeBufferGeometry(shapes);
     geometry.computeBoundingBox();
