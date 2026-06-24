@@ -11,8 +11,137 @@
     <title>Arshad Aboo — Software Engineer</title>
     <script type="module" crossorigin src="/assets/index-CZxzGnIn.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-B2uLgOTl.css">
+    <link rel="stylesheet" href="/assets/wifi-mode.css">
   </head>
   <body class="bg-gray-900 text-gray-100 antialiased">
     <div id="root"></div>
+    <div class="wifi-loading-dialog" role="status" aria-live="polite" hidden>
+      <div class="wifi-loading-panel">
+        <span class="wifi-loading-spinner" aria-hidden="true"></span>
+        <span>Loading northern lights...</span>
+      </div>
+    </div>
+    <script>
+      (() => {
+        const videoSrc = "/assets/northern%20lights.mp4";
+        let video;
+        let loaded = false;
+        let loading = false;
+        let enabled = false;
+
+        const dialog = document.querySelector(".wifi-loading-dialog");
+
+        const setDialog = (visible) => {
+          if (dialog) dialog.hidden = !visible;
+        };
+
+        const setToggleState = () => {
+          document.querySelectorAll(".wifi-mode-toggle").forEach((toggle) => {
+            toggle.setAttribute("aria-pressed", String(enabled));
+            toggle.classList.toggle("is-active", enabled);
+          });
+        };
+
+        const ensureVideo = () => {
+          if (video) return video;
+          video = document.createElement("video");
+          video.className = "wifi-bg-video";
+          video.src = videoSrc;
+          video.muted = true;
+          video.loop = true;
+          video.playsInline = true;
+          video.preload = "auto";
+          video.setAttribute("aria-hidden", "true");
+          document.body.prepend(video);
+          return video;
+        };
+
+        const enableWifiMode = async () => {
+          if (enabled || loading) return;
+          loading = true;
+          setDialog(true);
+
+          const bg = ensureVideo();
+          try {
+            if (!loaded) {
+              if (bg.readyState >= 2) {
+                loaded = true;
+              } else {
+                await new Promise((resolve, reject) => {
+                  const done = () => {
+                    loaded = true;
+                    cleanup();
+                    resolve();
+                  };
+                  const fail = () => {
+                    cleanup();
+                    reject(new Error("Video failed to load"));
+                  };
+                  const cleanup = () => {
+                    bg.removeEventListener("loadeddata", done);
+                    bg.removeEventListener("canplay", done);
+                    bg.removeEventListener("error", fail);
+                  };
+                  bg.addEventListener("loadeddata", done, { once: true });
+                  bg.addEventListener("canplay", done, { once: true });
+                  bg.addEventListener("error", fail, { once: true });
+                  bg.load();
+                });
+              }
+            }
+
+            enabled = true;
+            document.body.classList.add("wifi-mode");
+            await bg.play();
+          } catch {
+            enabled = false;
+            document.body.classList.remove("wifi-mode");
+          } finally {
+            loading = false;
+            setDialog(false);
+            setToggleState();
+          }
+        };
+
+        const disableWifiMode = () => {
+          enabled = false;
+          document.body.classList.remove("wifi-mode");
+          if (video) video.pause();
+          setToggleState();
+        };
+
+        const handleToggle = () => {
+          if (enabled) {
+            disableWifiMode();
+          } else {
+            enableWifiMode();
+          }
+        };
+
+        const createToggle = () => {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "wifi-mode-toggle";
+          button.setAttribute("aria-pressed", "false");
+          button.textContent = "Wifi mode";
+          button.addEventListener("click", handleToggle);
+          return button;
+        };
+
+        const mountToggles = () => {
+          document.querySelectorAll("nav .flex.items-center.gap-2").forEach((slot) => {
+            if (!slot.querySelector(".wifi-mode-toggle")) {
+              slot.appendChild(createToggle());
+            }
+          });
+          setToggleState();
+        };
+
+        const observer = new MutationObserver(mountToggles);
+        observer.observe(document.body, { childList: true, subtree: true });
+        window.addEventListener("DOMContentLoaded", mountToggles);
+        mountToggles();
+      })();
+    </script>
   </body>
 </html>

@@ -1,0 +1,114 @@
+.wifi-bg-video {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.45s ease;
+  background: #030712;
+}
+
+body.wifi-mode {
+  background: #030712;
+}
+
+body.wifi-mode .wifi-bg-video {
+  opacity: 1;
+}
+
+body.wifi-mode canvas {
+  opacity: 0.22;
+}
+
+.wifi-mode-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2rem;
+  padding: 0.25rem 0.75rem;
+  border: 1px solid rgb(20 184 166 / 65%);
+  border-radius: 9999px;
+  color: #99f6e4;
+  background: rgb(0 0 0 / 26%);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  white-space: nowrap;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.wifi-mode-toggle:hover,
+.wifi-mode-toggle:focus {
+  background: rgb(20 184 166 / 20%);
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px rgb(20 184 166 / 28%);
+}
+
+.wifi-mode-toggle.is-active {
+  background: #0d9488;
+  border-color: #2dd4bf;
+  color: #fff;
+}
+
+.wifi-loading-dialog {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgb(0 0 0 / 58%);
+  backdrop-filter: blur(8px);
+}
+
+.wifi-loading-dialog[hidden] {
+  display: none;
+}
+
+.wifi-loading-panel {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  max-width: calc(100vw - 2rem);
+  padding: 1rem 1.25rem;
+  border: 1px solid rgb(45 212 191 / 50%);
+  border-radius: 0.5rem;
+  background: rgb(3 7 18 / 88%);
+  color: #f9fafb;
+  box-shadow: 0 18px 60px rgb(0 0 0 / 45%);
+}
+
+.wifi-loading-spinner {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex: 0 0 auto;
+  border: 2px solid rgb(153 246 228 / 35%);
+  border-top-color: #5eead4;
+  border-radius: 9999px;
+  animation: wifi-spin 0.8s linear infinite;
+}
+
+@keyframes wifi-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 767px) {
+  .wifi-mode-toggle {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .wifi-loading-panel {
+    width: 100%;
+    justify-content: center;
+  }
+}
