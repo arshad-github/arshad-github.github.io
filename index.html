@@ -123,17 +123,16 @@
           button.type = "button";
           button.className = "wifi-mode-toggle";
           button.setAttribute("aria-pressed", "false");
-          button.textContent = "Wifi mode";
+          button.textContent = "Northern lights";
           button.addEventListener("click", handleToggle);
           return button;
         };
 
         const mountToggles = () => {
-          document.querySelectorAll("nav .flex.items-center.gap-2").forEach((slot) => {
-            if (!slot.querySelector(".wifi-mode-toggle")) {
-              slot.appendChild(createToggle());
-            }
-          });
+          const slot = document.querySelector("#home .flex.gap-4.pt-4");
+          if (slot && !slot.querySelector(".wifi-mode-toggle")) {
+            slot.appendChild(createToggle());
+          }
           setToggleState();
         };
 

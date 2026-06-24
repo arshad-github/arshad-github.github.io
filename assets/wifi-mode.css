@@ -27,13 +27,12 @@ body.wifi-mode canvas {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 2rem;
-  padding: 0.25rem 0.75rem;
+  min-height: 2.5rem;
+  padding: 0.5rem 1rem;
   border: 1px solid rgb(20 184 166 / 65%);
-  border-radius: 9999px;
+  border-radius: 0.25rem;
   color: #99f6e4;
   background: rgb(0 0 0 / 26%);
-  font-size: 0.875rem;
   line-height: 1.25rem;
   white-space: nowrap;
   transition:
@@ -103,8 +102,8 @@ body.wifi-mode canvas {
 
 @media (max-width: 767px) {
   .wifi-mode-toggle {
-    width: 100%;
-    justify-content: flex-start;
+    width: auto;
+    justify-content: center;
   }
 
   .wifi-loading-panel {
